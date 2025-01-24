@@ -15,7 +15,7 @@ namespace MyPizzaRestaurant.Models
             _dbSet = context.Set<T>();
         }
 
-        public Task AddAsync(Task entity)
+        public Task AddAsync(T entity)
         {
             throw new NotImplementedException();
         }
@@ -47,7 +47,7 @@ namespace MyPizzaRestaurant.Models
 
         }
 
-        public Task UpdateAsync(Task entity)
+        public Task UpdateAsync(T entity)
         {
             throw new NotImplementedException();
         }
