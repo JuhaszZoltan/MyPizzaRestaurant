@@ -5,6 +5,9 @@
 }
 
 <h1>Ingredients</h1>
+
+<a asp-action="Create">Create new ingredient</a>
+
 <table  class="table">
     <thead>
         <tr>
@@ -14,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(Ingredient ingredient in Model)
+        @foreach(var ingredient in Model)
         {
             <tr>
                 <td>

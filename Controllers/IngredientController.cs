@@ -23,5 +23,23 @@ namespace MyPizzaRestaurant.Controllers
         {
             return View(await ingedients.GetByIdAsync(id, new() { Includes = "ProductIngredients.Product" }));
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("IngredientId, Name")]Ingredient ingredient)
+        {
+            if (ModelState.IsValid)
+            {
+                await ingedients.AddAsync(ingredient);
+                return RedirectToAction("Index");
+            }
+            return View(ingredient);
+        }
     }
 }

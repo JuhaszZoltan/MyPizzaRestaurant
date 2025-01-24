@@ -15,12 +15,13 @@ namespace MyPizzaRestaurant.Models
             _dbSet = context.Set<T>();
         }
 
-        public Task AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
@@ -47,9 +48,11 @@ namespace MyPizzaRestaurant.Models
 
         }
 
-        public Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            //TODO
+            _dbSet.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }
