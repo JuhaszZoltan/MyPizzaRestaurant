@@ -7,21 +7,28 @@ namespace MyPizzaRestaurant.Controllers
 {
     public class IngredientController : Controller
     {
-        private Repository<Ingredient> ingedients;
+        private Repository<Ingredient> ingredients;
+
+        private QueryOptiopns<Ingredient> options;
 
         public IngredientController(ApplicationDbContext context)
         {
-            ingedients = new(context);
+            ingredients = new(context);
+            options = new()
+            {
+                Includes = "ProductIngredients.Product"
+            };
+
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await ingedients.GetAllAsync());
+            return View(await ingredients.GetAllAsync());
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            return View(await ingedients.GetByIdAsync(id, new() { Includes = "ProductIngredients.Product" }));
+            return View(await ingredients.GetByIdAsync(id, new() { Includes = "ProductIngredients.Product" }));
         }
 
         [HttpGet]
@@ -36,10 +43,24 @@ namespace MyPizzaRestaurant.Controllers
         {
             if (ModelState.IsValid)
             {
-                await ingedients.AddAsync(ingredient);
+                await ingredients.AddAsync(ingredient);
                 return RedirectToAction("Index");
             }
             return View(ingredient);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return View(await ingredients.GetByIdAsync(id, options));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Ingredient ingredient)
+        {
+            await ingredients.DeleteAsync(ingredient.IngredientId);
+            return RedirectToAction("Index");
         }
     }
 }

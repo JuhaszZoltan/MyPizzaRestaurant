@@ -23,7 +23,9 @@ namespace MyPizzaRestaurant.Models
 
         public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            T entity = await _dbSet.FindAsync(id);
+            _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
@@ -34,7 +36,9 @@ namespace MyPizzaRestaurant.Models
         public async Task<T> GetByIdAsync(int id, QueryOptiopns<T> options)
         {
             IQueryable<T> query = _dbSet;
-            //TODO::: check options
+            if(options.HasWhere) query = query.Where(options.Where);
+            if(options.HasOrderBy) query = query.OrderBy(options.OrderBy);
+
             foreach(string include in options.GetIncludes())
             {
                 query = query.Include(include);
@@ -50,8 +54,7 @@ namespace MyPizzaRestaurant.Models
 
         public async Task UpdateAsync(T entity)
         {
-            //TODO
-            _dbSet.Update(entity);
+            _context.Update(entity);
             await _context.SaveChangesAsync();
         }
     }
