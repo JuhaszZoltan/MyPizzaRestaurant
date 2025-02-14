@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewBag.Title = "Menu items";
+}
+
+<h2>Menu Items of MyPizzaRestaurant</h2>
+
+<div class="row">
+
+    @foreach (Product product in Model)
+    {
+        <div class="col-md-4">
+            <form asp-action="delete" asp-controller="product" method="post">
+                <input type="hidden" name="id" value="@product.ProductId" />
+                <div class="card" style="width:18rem;">
+                    <img src="@Url.Content(product.ImageUrl)" class="card-img-top fixed-img-height" alt="@product.Description" />
+                </div>
+            </form>
+        </div>
+    }
+</div>
+

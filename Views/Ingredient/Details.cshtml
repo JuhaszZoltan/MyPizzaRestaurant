@@ -32,5 +32,6 @@ Model.ProductIngredients.Any())
 }
 <div>
     <a asp-action="Delete" asp-route-id="@Model.IngredientId" class="btn btn-danger">Delete this ingredient</a>
-    <br /><a asp-action="Index">Back to list</a>
+    <a asp-action="Edit" asp-route-id="@Model.IngredientId" class="btn btn-primary">Edit this ingredient</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to list</a>
 </div>
